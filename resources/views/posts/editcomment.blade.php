@@ -1,15 +1,13 @@
 @extends('layouts.default')
-
 @section('title', 'Edit Post')
-
 @section('content')
 	<h1>
 	<a href="{{ url('/') }}" class="header-menu">Back</a>
-	Edit Post
+	Edit Comment
 	</h1>
-	<form method="post" action="/posts/edit">
-                <input type="hidden" name="id" value="{{ $post->id }}">
-                {{ csrf_field() }}
+	<form method="post" action="{{ url('/comments', $comment->id) }}">
+		{{ csrf_field() }}
+		{{ method_field('patch') }}
 		<p>
 			<input type="text" name="title" placeholder="enter title" value="{{
 			old('title', $post->title) }}">
