@@ -10,21 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/','PostsController@index');
-Route::get('/posts/show/{id}', 'PostsController@show');
-Route::get('/posts/create', 'PostsController@getCreateView');
-Route::post('/posts/create', 'PostsController@create');
-Route::get('/posts/edit/{id}', 'PostsController@getEditView');
-Route::post('/posts/edit', 'PostsController@edit');
-Route::get('/posts/delete/{id}', 'PostsController@delete');
-Route::post('/posts/{post}/comments', 'CommentsController@store');
-Route::post('/posts/{post}/comments', 'CommentsController@create');
-Route::delete('/posts/{post}/comments/{comment}', 'CommentsController@destroy');
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => '/posts'], function($router) {
+    $router->get('/show/{id}', 'PostsController@show');
+    $router->get('/create', 'PostsController@create');
+    $router->post('/create', 'PostsController@store');
+    $router->get('/edit/{id}', 'PostsController@edit');
+    $router->post('/edit', 'PostsController@regist');
+    $router->get('/delete/{id}', 'PostsController@delete');
+    $router->post('/{id}/comments', 'CommentsController@store');
+    $router->post('/{post}/comments', 'CommentsController@create');
+    $router->delete('{post}/comments/{comment}', 'CommentsController@destroy');
+});

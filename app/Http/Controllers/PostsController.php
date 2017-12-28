@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Post as PostModel;
 use App\Models\Comment as CommentModel;
 use App\Http\Requests\PostRequest;
+use App\Http\Controllers\BaseController;
 
-class PostsController extends Controller
+class PostsController extends BaseController
 {
     private $post_model;
     private $comment_model;
@@ -21,6 +22,7 @@ class PostsController extends Controller
      */
     public function __construct(PostModel $post_model, CommentModel $comment_model)
     {
+        parent::__construct();
         $this->post_model = $post_model;
         $this->comment_model = $comment_model;
     }
@@ -32,7 +34,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-    	return view('posts/index', ['all_posts' => $this->post_model->getAllPosts()]);
+    	return $this->render(['all_posts' => $this->post_model->getAllPosts()]);
     }
 
     /** 詳細ページに特定のPostとそれに関連したCommentを表示する
@@ -43,12 +45,10 @@ class PostsController extends Controller
      */
      public function show(int $id)
     {
-     	return view('posts/show',
-            [
-                'post' => $this->post_model->getPostFromId($id),
-                'comments' => $this->comment_model->getAllCommentsFromPostId($id)
-            ]
-        );
+     	return $this->render([
+            'post' => $this->post_model->getPostFromId($id),
+            'comments' => $this->comment_model->getAllCommentsFromPostId($id)
+        ]);
     }
 
     /** Postを作成する画面を表示する
@@ -57,9 +57,9 @@ class PostsController extends Controller
      * @access public
      *
      */
-     public function getCreateView()
+     public function create()
     {
-     	return view('posts/create');
+     	return $this->render();
     }
 
     /** Postを作成する
@@ -68,7 +68,7 @@ class PostsController extends Controller
      * @return response
      * @access public
      */
-     public function create(PostRequest $request)
+     public function store(PostRequest $request)
     {
      	$id = $this->post_model->createPostAndGetId($request->all());
      	return redirect('posts/show/'.$id)->with('post', $this->post_model->getPostFromId($id));
@@ -80,9 +80,9 @@ class PostsController extends Controller
      * @return response
      * @access public
      */
-	public function getEditView(int $id)
+	public function edit(int $id)
     {
-        return view('posts/edit',['post' => $this->post_model->getPostFromId($id)]);
+        return $this->render(['post' => $this->post_model->getPostFromId($id)]);
     }
 
     /** Postを編集する
@@ -92,7 +92,7 @@ class PostsController extends Controller
      * @return response
      * @access public
      */
-    public function edit(PostRequest $request)
+    public function regist(PostRequest $request)
     {
         $inputs = $request->all();
         $this->post_model->updatePost($inputs);

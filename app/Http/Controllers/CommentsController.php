@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
 use App\Models\Post as PostModel;
 use App\Models\Comment as CommentModel;
 

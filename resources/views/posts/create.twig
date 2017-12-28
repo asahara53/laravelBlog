@@ -1,0 +1,25 @@
+{% extends('layouts.user_default') %}
+{% block content %}
+<h1>
+<a href="{{ url('/')}}" class="header-menu">Back</a>
+New Post
+</h1>
+<form method="post" action="/posts/create">
+  {{ csrf_field() }}
+  <p>
+    <input type="text" name="title" placeholder="enter title" value="{{ input_old('title') }}">
+    {% if errors.first('title')|length > 0 %}
+      <span class="error">{{ errors.first('title') }}</span>
+    {% endif %}
+  </p>
+  <p>
+    <input type="text" name="body" placeholder="enter body" value="{{ input_old('body')}}">
+		{% if errors.first('body')|length > 0 %}
+		<span class="error">{{ errors.first('body')}}</span>
+		{% endif %}
+	</p>
+	<p>
+		<input type="submit" value="Add">
+	</p>
+</form>
+{% endblock %}
