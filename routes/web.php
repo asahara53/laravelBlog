@@ -11,6 +11,7 @@
 |
 */
 Route::get('/','PostsController@index');
+Route::get('/home','HomeController@index');
 
 Route::group(['prefix' => '/posts'], function($router) {
     $router->get('/show/{id}', 'PostsController@show');
@@ -23,3 +24,9 @@ Route::group(['prefix' => '/posts'], function($router) {
     $router->post('/{post}/comments', 'CommentsController@create');
     $router->delete('{post}/comments/{comment}', 'CommentsController@destroy');
 });
+
+Route::get('/login', 'Auth\LoginController@showLoginForm');
+Route::post('/login', 'Auth\LoginController@showLoginForm');
+Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('/register', 'Auth\RegisterController@register');

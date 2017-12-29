@@ -1,6 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
+{% extends('layouts/auth_default')%}
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
