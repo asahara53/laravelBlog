@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\CommentRequest;
 use App\Models\Post as PostModel;
 use App\Models\Comment as CommentModel;
 
@@ -29,11 +30,11 @@ class CommentsController extends Controller
     * @return response
     * @access public
     */
-    public function create(Request $request, int $id)
+    public function store(CommentRequest $request)
     {
         $inputs = $request->all();
-        $this->comment_model->createComment($inputs, $id);
-    	return redirect('posts/show/'.$id);
+        $this->comment_model->saveComment($inputs);
+    	return redirect('posts/show/'.$inputs['post_id']);
     }
 
     /** コメントを削除する
@@ -47,5 +48,4 @@ class CommentsController extends Controller
     	$this->comment_model->delete($id);
     	return redirect()->back();
     }
-
 }
