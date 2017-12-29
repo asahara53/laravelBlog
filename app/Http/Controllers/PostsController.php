@@ -105,7 +105,7 @@ class PostsController extends BaseController
      * @return response
      * @access public
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $this->post_model->deletePost($id);
         return redirect('/');
